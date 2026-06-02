@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Living Text</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Full-viewport canvas for all animations -->
+  <canvas id="main-canvas"></canvas>
+
+  <!-- API key bar -->
+  <div id="api-key-bar">
+    <label for="api-key-input">Claude API Key</label>
+    <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." autocomplete="off" />
+    <button id="save-key-btn">Save</button>
+    <span id="key-status"></span>
+  </div>
+
+  <div id="app">
+
+    <!-- ── Input panel ─────────────────────────────── -->
+    <div id="input-panel">
+      <header>
+        <h1 class="app-title">Living Text</h1>
+        <p class="app-sub">Paste a story, poem, or piece of writing and watch it come alive.</p>
+      </header>
+
+      <textarea id="text-input" spellcheck="false"
+        placeholder="Paste your writing here…&#10;&#10;Or click 'Bring to Life' to load the default example."></textarea>
+
+      <div class="input-controls">
+        <label class="file-btn">
+          <input type="file" id="file-upload" accept=".txt">
+          ↑ Upload .txt
+        </label>
+        <button id="animate-btn" class="primary-btn">✦ Bring to Life</button>
+      </div>
+
+      <div id="loading-state" hidden>
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+        <p id="loading-text">Reading the story…</p>
+      </div>
+
+      <div id="error-msg" hidden></div>
+    </div>
+
+    <!-- ── Display panel ───────────────────────────── -->
+    <div id="display-panel" hidden>
+      <nav id="display-nav">
+        <button id="back-btn">← Edit</button>
+        <span id="display-title"></span>
+        <div class="nav-right">
+          <button id="remix-btn">↺ Remix</button>
+          <button id="toggle-editor-btn">✏ Pixel Editor</button>
+        </div>
+      </nav>
+
+      <div id="text-display" aria-live="polite"></div>
+    </div>
+
+    <!-- ── Pixel art editor sidebar ───────────────── -->
+    <div id="editor-panel" hidden>
+      <div id="editor-header">
+        <h3>Pixel Art Editor</h3>
+        <button id="close-editor-btn" aria-label="Close editor">×</button>
+      </div>
+
+      <div id="size-controls">
+        <label><input type="radio" name="sprite-size" value="16" checked> 16×16</label>
+        <label><input type="radio" name="sprite-size" value="32"> 32×32</label>
+      </div>
+
+      <div id="editor-canvas-wrap">
+        <canvas id="editor-canvas"></canvas>
+      </div>
+
+      <div id="editor-toolbar">
+        <button class="tool-btn active" data-tool="draw" title="Draw">✏</button>
+        <button class="tool-btn" data-tool="fill" title="Fill">⬛</button>
+        <button class="tool-btn" data-tool="erase" title="Erase">◻</button>
+        <button class="tool-btn" data-tool="pick" title="Pick colour">◈</button>
+      </div>
+
+      <div id="colour-row">
+        <input type="color" id="colour-picker" value="#ffffff">
+        <div id="palette-swatches"></div>
+      </div>
+
+      <div id="sprite-assignment">
+        <label for="word-assign">Assign to word</label>
+        <input type="text" id="word-assign" placeholder="e.g. wolf">
+        <label for="trigger-select">Trigger</label>
+        <select id="trigger-select">
+          <option value="hover">Hover → cursor trail</option>
+          <option value="click">Click → burst</option>
+          <option value="idle">Idle float nearby</option>
+        </select>
+        <button id="assign-sprite-btn">Assign</button>
+      </div>
+
+      <div id="sprite-library">
+        <h4>Saved Sprites</h4>
+        <div id="sprite-gallery"></div>
+        <div id="lib-controls">
+          <button id="save-sprite-btn">Save Sprite</button>
+          <button id="clear-canvas-btn">Clear</button>
+        </div>
+        <div id="lib-controls" style="margin-top:6px">
+          <button id="set-cursor-btn">⊕ Set as Cursor</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- #app -->
+
+  <script src="js/sprites.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/text.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
